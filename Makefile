@@ -6,14 +6,14 @@
 #    By: hang <hang@student.42kl.edu.my>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/09 01:02:08 by hang              #+#    #+#              #
-#    Updated: 2024/04/09 01:23:01 by hang             ###   ########.fr        #
+#    Updated: 2024/04/17 15:02:01 by hang             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 PROG	= pipex
 PROG_B  = pipex_bonus
 
-SRCS 	= srcs/pipex.c srcs/utils.c
+SRCS 	= srcs/pipex.c srcs/pipex_utils.c
 OBJS 	= ${SRCS:.c=.o}
 MAIN	= srcs/pipex.c
 
@@ -52,8 +52,8 @@ clean:
 
 fclean: 	clean
 					@make fclean -C ./libft
-					@rm -f $(NAME)
 					@rm -f ${PROG}
+					@rm -f ${PROG_B}
 					@echo "\n\033[31mDeleting EVERYTHING! ⌐(ಠ۾ಠ)¬\n"
 
 re:			fclean all
