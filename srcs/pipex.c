@@ -6,7 +6,7 @@
 /*   By: hang <hang@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:24:35 by hang              #+#    #+#             */
-/*   Updated: 2024/04/17 15:22:32 by hang             ###   ########.fr       */
+/*   Updated: 2024/04/19 10:47:52 by hang             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,6 @@ int main(int argc, char **argv, char **envp)
         parent_p(argv, envp, pipe_fd);
     }
     else
-	{
-		ft_putstr_fd("\033[31mError: \033[33mInproper Arguments\n\033[0m", 2);
-		ft_putstr_fd("\033[33mE.g. : ./pipex <file1> <cmd1> <cmd2> <file2>\n", 1);
-	}
+        inproper_args();
 	return (0);
 }

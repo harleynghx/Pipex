@@ -6,18 +6,18 @@
 #    By: hang <hang@student.42kl.edu.my>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/09 01:02:08 by hang              #+#    #+#              #
-#    Updated: 2024/04/17 15:02:01 by hang             ###   ########.fr        #
+#    Updated: 2024/04/19 10:48:22 by hang             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 PROG	= pipex
 PROG_B  = pipex_bonus
 
-SRCS 	= srcs/pipex.c srcs/pipex_utils.c
+SRCS 	= srcs/pipex.c srcs/pipex_utils.c srcs/pipex_bonus_utils.c 
 OBJS 	= ${SRCS:.c=.o}
 MAIN	= srcs/pipex.c
 
-SRCS_B	= srcs/pipex_bonus.c srcs/utils.c srcs/utils_bonus.c
+SRCS_B	= srcs/pipex_bonus.c srcs/pipex_utils.c srcs/pipex_bonus_utils.c 
 OBJS_B	= ${SRCS_B:.c=.o}
 MAIN_B	= srcs/pipex_bonus.c
 
@@ -44,7 +44,6 @@ ${PROG_B}:	${OBJS_B}
 					@echo "\033[33m----Compiling lib----"
 					@make re -C ./libft
 					@$(CC) ${OBJS_B} -Llibft -lft -o ${PROG_B}
-					@echo "\033[32mPipex Bonus Compiled! ᕦ(\033[31m♥\033[32m_\033[31m♥\033[32m)ᕤ\n"
 
 clean:
 					@make clean -C ./libft
@@ -54,7 +53,6 @@ fclean: 	clean
 					@make fclean -C ./libft
 					@rm -f ${PROG}
 					@rm -f ${PROG_B}
-					@echo "\n\033[31mDeleting EVERYTHING! ⌐(ಠ۾ಠ)¬\n"
 
 re:			fclean all
 
