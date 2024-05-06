@@ -6,11 +6,12 @@
 /*   By: hang <hang@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 16:03:04 by hang              #+#    #+#             */
-/*   Updated: 2024/04/19 10:45:44 by hang             ###   ########.fr       */
+/*   Updated: 2024/04/23 18:17:45 by hang             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
+#include <stdio.h>
 
 void	inproper_args(void)
 {
@@ -20,46 +21,84 @@ void	inproper_args(void)
 	exit(EXIT_SUCCESS);
 }
 
-/* Function to open the files with the right flags */
-int	open_file(char *argv, int i)
-{
-	int	file;
+// int	ft_get_terminal_output(char **line)
+// {
+// 	char	*buffer;
+// 	int		i;
+// 	int		r;
+// 	char	letter;
 
-	file = 0;
-	if (i == 0)
-		file = open(argv, O_WRONLY | O_CREAT | O_APPEND, 0777);
-	else if (i == 1)
-		file = open(argv, O_WRONLY | O_CREAT | O_TRUNC, 0777);
-	else if (i == 2)
-		file = open(argv, O_RDONLY, 0777);
-	if (file == -1)
-		error();
-	return (file);
-}
+// 	i = 0;
+// 	r = 0;
+// 	buffer = (char *)malloc(10000);
+// 	if (!buffer)
+// 		return (-1);
+// 	r = read(0, &letter, 1);
+// 	while (r && letter != '\n' && letter != '\0')
+// 	{
+// 		if (letter != '\n' && letter != '\0')
+// 			buffer[i] = letter;
+// 		i++;
+// 		r = read(0, &letter, 1);
+// 	}
+// 	buffer[i] = '\n';
+// 	buffer[++i] = '\0';
+// 	*line = buffer;
+// 	free(buffer);
+// 	return (r);
+// }
+
 
 int	ft_get_terminal_output(char **line)
 {
 	char	*buffer;
 	int		i;
-	int		r;
-	char	c;
+	char	letter;
 
 	i = 0;
-	r = 0;
 	buffer = (char *)malloc(10000);
 	if (!buffer)
 		return (-1);
-	r = read(0, &c, 1);
-	while (r && c != '\n' && c != '\0')
+	read(0, &letter, 1);
+	while (letter != '\n' && letter != '\0')
 	{
-		if (c != '\n' && c != '\0')
-			buffer[i] = c;
+		if (letter != '\n' && letter != '\0')
+			buffer[i] = letter;
 		i++;
-		r = read(0, &c, 1);
+		read(0, &letter, 1);
 	}
 	buffer[i] = '\n';
 	buffer[++i] = '\0';
 	*line = buffer;
 	free(buffer);
-	return (r);
+	return (1);
+}
+
+void	here_doc(char *limiter, int argc)
+{
+	pid_t	pid;
+	int		fd[2];
+	char	*line;
+
+	if (argc < 6)
+		inproper_args();
+	if (pipe(fd) == -1)
+		error();
+	pid = fork();
+	if (pid == 0)
+	{
+		close(fd[0]);
+		while (ft_get_terminal_output(&line))
+		{
+			if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
+				exit(EXIT_SUCCESS);
+			write(fd[1], line, ft_strlen(line));
+		}
+	}
+	else
+	{
+		close(fd[1]);
+		dup2(fd[0], STDIN_FILENO);
+		wait(NULL);
+	}
 }
