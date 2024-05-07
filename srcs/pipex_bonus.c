@@ -6,7 +6,7 @@
 /*   By: hang <hang@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 19:22:05 by hang              #+#    #+#             */
-/*   Updated: 2024/04/23 16:13:58 by hang             ###   ########.fr       */
+/*   Updated: 2024/05/08 03:28:56 by hang             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ void	child_n_Parent(char *argv, char **envp)
 	}
 	else
 	{
+		waitpid(-1, NULL, 0);
 		close(fd[1]);
 		dup2(fd[0], STDIN_FILENO);
-		waitpid(pid, NULL, 0);
 	}
 }
 

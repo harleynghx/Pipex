@@ -6,7 +6,7 @@
 #    By: hang <hang@student.42kl.edu.my>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/09 01:02:08 by hang              #+#    #+#              #
-#    Updated: 2024/04/23 17:10:15 by hang             ###   ########.fr        #
+#    Updated: 2024/05/08 03:30:44 by hang             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,6 @@ ${PROG}:	${OBJS}
 					@echo "\033[33m----Compiling lib----"
 					@make re -C ./libft
 					@$(CC) ${OBJS} -Llibft -lft -o ${PROG}
-					@echo "\033[32mPipex Compiled! ᕦ(\033[31m♥\033[32m_\033[31m♥\033[32m)ᕤ\n"
 
 
 bonus:		${PROG_B}

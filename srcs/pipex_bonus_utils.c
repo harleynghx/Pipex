@@ -6,7 +6,7 @@
 /*   By: hang <hang@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 16:03:04 by hang              #+#    #+#             */
-/*   Updated: 2024/04/23 18:17:45 by hang             ###   ########.fr       */
+/*   Updated: 2024/05/08 03:29:28 by hang             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,35 +21,7 @@ void	inproper_args(void)
 	exit(EXIT_SUCCESS);
 }
 
-// int	ft_get_terminal_output(char **line)
-// {
-// 	char	*buffer;
-// 	int		i;
-// 	int		r;
-// 	char	letter;
-
-// 	i = 0;
-// 	r = 0;
-// 	buffer = (char *)malloc(10000);
-// 	if (!buffer)
-// 		return (-1);
-// 	r = read(0, &letter, 1);
-// 	while (r && letter != '\n' && letter != '\0')
-// 	{
-// 		if (letter != '\n' && letter != '\0')
-// 			buffer[i] = letter;
-// 		i++;
-// 		r = read(0, &letter, 1);
-// 	}
-// 	buffer[i] = '\n';
-// 	buffer[++i] = '\0';
-// 	*line = buffer;
-// 	free(buffer);
-// 	return (r);
-// }
-
-
-int	ft_get_terminal_output(char **line)
+int	GNL(char **line)
 {
 	char	*buffer;
 	int		i;
@@ -88,7 +60,7 @@ void	here_doc(char *limiter, int argc)
 	if (pid == 0)
 	{
 		close(fd[0]);
-		while (ft_get_terminal_output(&line))
+		while (GNL(&line))
 		{
 			if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
 				exit(EXIT_SUCCESS);
@@ -96,9 +68,9 @@ void	here_doc(char *limiter, int argc)
 		}
 	}
 	else
-	{
+	{	
+		waitpid(-1, NULL, 0);
 		close(fd[1]);
 		dup2(fd[0], STDIN_FILENO);
-		wait(NULL);
 	}
 }

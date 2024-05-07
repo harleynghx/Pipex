@@ -6,7 +6,7 @@
 /*   By: hang <hang@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 00:59:05 by hang              #+#    #+#             */
-/*   Updated: 2024/04/23 18:17:26 by hang             ###   ########.fr       */
+/*   Updated: 2024/05/08 03:17:11 by hang             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ void	execute(char *argv, char **envp);
 
 void	error(void);
 void	inproper_args(void);
-int	    ft_get_terminal_output(char **line);
+int	    GNL(char **line);
 void	here_doc(char *limiter, int argc);
 #endif
