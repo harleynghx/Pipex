@@ -6,13 +6,12 @@
 /*   By: hang <hang@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:24:37 by hang              #+#    #+#             */
-/*   Updated: 2024/04/17 15:11:13 by hang             ###   ########.fr       */
+/*   Updated: 2024/05/08 17:26:13 by hang             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-/* To search through all the path for the command. Check note for more info */
 char	*find_path(char *cmd_args, char **envp)
 {
 	char	**split_paths;
@@ -42,27 +41,16 @@ char	*find_path(char *cmd_args, char **envp)
 	return (0);
 }
 
-/* A simple error displaying function. */
-void	error(void)
-{
-	perror("\033[31mError");
-	exit(EXIT_FAILURE);
-}
-
-/* Function that take the command and send it to find_path
- before executing it. */
 void	execute(char *argv, char **envp)
 {
 	char	**cmd_args;
-	int 	i;
+	int		i;
 	char	*split_path;
-	
+
 	i = -1;
 	cmd_args = ft_split(argv, ' ');
 	split_path = find_path(cmd_args[0], envp);
-
-	//to free it if variable == falsy
-	if (!split_path)	
+	if (!split_path)
 	{
 		while (cmd_args[++i])
 			free(cmd_args[i]);
@@ -71,4 +59,66 @@ void	execute(char *argv, char **envp)
 	}
 	if (execve(split_path, cmd_args, envp) == -1)
 		error();
+}
+
+void	inproper_args(void)
+{
+	ft_putstr_fd("\033[31mError: \033[33mInproper Arguments\n\033[0m", 2);
+	ft_putstr_fd("\033[33mEx: ./pipex <file1> <cmd1> <cmd2> <...> <file2>\n",
+		1);
+	exit(EXIT_SUCCESS);
+}
+
+int	gnl(char **line)
+{
+	char	*buffer;
+	int		i;
+	char	letter;
+
+	i = 0;
+	buffer = (char *)malloc(10000);
+	if (!buffer)
+		return (-1);
+	read(0, &letter, 1);
+	while (letter != '\n' && letter != '\0')
+	{
+		if (letter != '\n' && letter != '\0')
+			buffer[i] = letter;
+		i++;
+		read(0, &letter, 1);
+	}
+	buffer[i] = '\n';
+	buffer[++i] = '\0';
+	*line = buffer;
+	free(buffer);
+	return (1);
+}
+
+void	here_doc(char *limiter, int argc)
+{
+	pid_t	pid;
+	int		fd[2];
+	char	*line;
+
+	if (argc < 6)
+		inproper_args();
+	if (pipe(fd) == -1)
+		error();
+	pid = fork();
+	if (pid == 0)
+	{
+		close(fd[0]);
+		while (gnl(&line))
+		{
+			if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
+				exit(EXIT_SUCCESS);
+			write(fd[1], line, ft_strlen(line));
+		}
+	}
+	else
+	{
+		waitpid(-1, NULL, 0);
+		close(fd[1]);
+		dup2(fd[0], STDIN_FILENO);
+	}
 }

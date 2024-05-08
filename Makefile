@@ -6,20 +6,16 @@
 #    By: hang <hang@student.42kl.edu.my>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/09 01:02:08 by hang              #+#    #+#              #
-#    Updated: 2024/05/08 03:30:44 by hang             ###   ########.fr        #
+#    Updated: 2024/05/08 17:07:18 by hang             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 PROG	= pipex
-PROG_B  = pipex_bonus
 
-SRCS 	= srcs/pipex.c srcs/pipex_utils.c srcs/pipex_bonus_utils.c 
+SRCS 	= srcs/pipex.c srcs/pipex_utils.c
 OBJS 	= ${SRCS:.c=.o}
 MAIN	= srcs/pipex.c
 
-SRCS_B	= srcs/pipex_bonus.c srcs/pipex_utils.c srcs/pipex_bonus_utils.c 
-OBJS_B	= ${SRCS_B:.c=.o}
-MAIN_B	= srcs/pipex_bonus.c
 
 HEADER	= -Iincludes
 
@@ -36,26 +32,16 @@ ${PROG}:	${OBJS}
 					@make re -C ./libft
 					@$(CC) ${OBJS} -Llibft -lft -o ${PROG}
 
-
-bonus:		${PROG_B}
-
-${PROG_B}:	${OBJS_B}
-					@echo "\033[33m----Compiling lib----"
-					@make re -C ./libft
-					@$(CC) ${OBJS_B} -Llibft -lft -o ${PROG_B}
-
 clean:
 					@make clean -C ./libft
-					@rm -f ${OBJS} ${OBJS_B}
+					@rm -f ${OBJS}
 
 fclean: 	clean
 					@make fclean -C ./libft
 					@rm -f ${PROG}
-					@rm -f ${PROG_B}
 
 re:			fclean all
 
-re_bonus:	fclean bonus
 
 party:
 					@printf "\033c"
@@ -70,4 +56,4 @@ party:
 					@printf "\033c"
 					@echo "\033[34m♪┗(・o･)┓♪\n"
 
-.PHONY: all clean fclean re re_bonus bonus party
+.PHONY: all clean fclean re party

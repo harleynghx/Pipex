@@ -6,7 +6,7 @@
 /*   By: hang <hang@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 08:32:48 by hang              #+#    #+#             */
-/*   Updated: 2024/04/23 17:39:21 by hang             ###   ########.fr       */
+/*   Updated: 2024/05/08 17:17:55 by hang             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ char	*delete_upto_nl(char *fd_str)
 	free(fd_str);
 	return (str);
 }
+
 char	*readnjoin(int fd, char *fd_str)
 {
 	char	*buff;
