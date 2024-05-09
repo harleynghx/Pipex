@@ -90,7 +90,6 @@ int	gnl(char **line)
 	buffer[i] = '\n';
 	buffer[++i] = '\0';
 	*line = buffer;
-	free(buffer);
 	return (1);
 }
 

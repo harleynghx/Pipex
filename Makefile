@@ -19,7 +19,7 @@ MAIN	= srcs/pipex.c
 
 HEADER	= -Iincludes
 
-CC 		= gcc
+CC 		= gcc -fsanitize=address
 CFLAGS 	= -Wall -Wextra -Werror -g
 
 .c.o:		%.o : %.c
