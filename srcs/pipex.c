@@ -6,7 +6,7 @@
 /*   By: hang <hang@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 01:24:35 by hang              #+#    #+#             */
-/*   Updated: 2024/05/08 17:30:25 by hang             ###   ########.fr       */
+/*   Updated: 2024/05/13 05:27:59 by hang             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ int	main(int argc, char **argv, char **envp)
 			i = 2;
 			fileout = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0777);
 			filein = open(argv[1], O_RDONLY, 0777);
+			if (filein == -1)
+				error();
 			dup2(filein, STDIN_FILENO);
 		}
 		while (i < argc - 2)
